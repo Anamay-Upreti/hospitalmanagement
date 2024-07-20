@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
@@ -34,21 +34,17 @@ const RegisterForm = ({ user }: { user: User }) => {
     resolver: zodResolver(PatientFormValidation),
     defaultValues: {
       ...PatientFormDefaultValues,
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
+      name: user?.name || "",
+      email: user?.email || "",
+      phone: user?.phone || "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof PatientFormValidation>) => {
     setIsLoading(true);
 
-    // Store file info in form data as
     let formData;
-    if (
-      values.identificationDocument &&
-      values.identificationDocument?.length > 0
-    ) {
+    if (values.identificationDocument && values.identificationDocument?.length > 0) {
       const blobFile = new Blob([values.identificationDocument[0]], {
         type: values.identificationDocument[0].type,
       });
@@ -79,9 +75,7 @@ const RegisterForm = ({ user }: { user: User }) => {
         pastMedicalHistory: values.pastMedicalHistory,
         identificationType: values.identificationType,
         identificationNumber: values.identificationNumber,
-        identificationDocument: values.identificationDocument
-          ? formData
-          : undefined,
+        identificationDocument: values.identificationDocument ? formData : undefined,
         privacyConsent: values.privacyConsent,
       };
 
@@ -99,10 +93,7 @@ const RegisterForm = ({ user }: { user: User }) => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex-1 space-y-12"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1 space-y-12">
         <section className="space-y-4">
           <h1 className="header">Welcome 👋</h1>
           <p className="text-dark-700">Let us know more about yourself.</p>
@@ -114,7 +105,6 @@ const RegisterForm = ({ user }: { user: User }) => {
           </div>
 
           {/* NAME */}
-
           <CustomFormField
             fieldType={FormFieldType.INPUT}
             control={form.control}
