@@ -117,4 +117,6 @@ export const PasskeyModal = () => {
       </AlertDialogContent>
     </AlertDialog>
   );
-};
+}
+
+export default PasskeyModal
